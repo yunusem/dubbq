@@ -18,11 +18,11 @@ const Sureler = ({ onSelectSurah, selectedSurah }) => {
                     return (
                         <li key={surahNumber} className="text-neutral-700 text-lg m-0.5 w-full">
                             <button
-                                className="flex w-full bg-neutral-900 rounded shadow-black justify-between mb-2 cursor-pointer"
+                                className="flex w-full bg-neutral-900 rounded shadow-black justify-between mb-2 cursor-pointer duration-100 transform  hover:scale-105"
                                 onClick={() => handleClick(surahNumber)}
                             >
-                                <div className="flex w-16 justify-end items-center p-4">{surahNumber}</div>
-                                <div className={`w-full flex justify-end p-4 ${Number(surahNumber) ===  Number(selectedSurah) ? 'text-[#ffd700]' : 'text-neutral-300'}`}>
+                                <div className="flex w-16 justify-end items-center px-4 py-1">{surahNumber}</div>
+                                <div className={`w-full flex justify-end px-4 py-1 ${Number(surahNumber) ===  Number(selectedSurah) ? 'text-[#ffd700]' : 'text-neutral-300'}`}>
                                     {surahInfo.name}
                                 </div>
                             </button>
