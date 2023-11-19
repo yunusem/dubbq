@@ -40,6 +40,8 @@ const Ayetler = ({ selectedSurah, searchTerm, ayahs }) => {
 
     const besmele = quranText["1"];
     const namesOfGod = "الله|لله|والله|بالله|لله|ولله|تالله|فالله|فلله|ءالله|ابالله|وتالله";
+
+    
     const namesOfGod_tr = "TANRI"
     const [selectedTranslations, setSelectedTranslations] = useState({});
 
@@ -118,7 +120,7 @@ const Ayetler = ({ selectedSurah, searchTerm, ayahs }) => {
 
         return (
             <div className="flex flex-col justify-between items-end  p-1 ">
-                <div className="ayah-label text-sm font-bold mr-2">{ayahLabel}</div>
+                <div className="ayah-label text-sm font-bold mr-2 text-neutral-950">{ayahLabel}</div>
                 <div className="global-ayah-number text-xs mr-2">{globalAyahNumber}</div>
             </div>
         );
@@ -128,7 +130,7 @@ const Ayetler = ({ selectedSurah, searchTerm, ayahs }) => {
         <div className="matching-ayah-list flex flex-col w-full h-screen p-1 overflow-auto">
             <div className="w-full">
                 <ul className="quran-text-list flex-col space-y-2 mr-3">
-                    <li key={selectedSurah} className="text-neutral-700 text-lg m-0.5 w-full">
+                    <li key={selectedSurah + ":0"} className="text-neutral-700 text-lg m-0.5 w-full">
                         {(selectedSurah && (Number(selectedSurah) !== 1 && Number(selectedSurah) !== 9) && !searchTerm) && (
                             <div className="flex w-full bg-blue-400 rounded shadow-black justify-end mb-2 ">
                                 <div className="w-full flex justify-end p-4">{highlight(besmele, true)}</div>

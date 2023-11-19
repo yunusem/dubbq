@@ -60,6 +60,20 @@ function Root() {
         );
     }, [selectedSurah]);
 
+    useEffect(() => {
+        const invalidTranslations = ayahs.filter(([ayahNumber, _]) => {
+            const translatedText = quranText_tr[ayahNumber];
+            if (!translatedText) return false;
+            return !/[;,.?:]$/.test(translatedText.trim());
+        }).map(([ayahNumber, _]) => `Invalid Translation [${ayahNumber}]: ${quranText_tr[ayahNumber]}`);
+    
+        if (invalidTranslations.length > 0) {
+            console.log("Noticeable TAG: Invalid Translations Found:");
+            invalidTranslations.forEach(invalidTranslation => console.log(invalidTranslation));
+        }
+    }, [ayahs]);
+    
+
     return (
         <div className="Root select-none bg-neutral-700 flex space-x-1">
             <Sureler onSelectSurah={handleSelectSurah} selectedSurah={selectedSurah} />

@@ -5,7 +5,11 @@ import json
 
 def clean_text(text, surah_number, ayah_number):
     # Replace non-breaking space with regular space and remove special characters at the last 2698 118123
-    text = text.replace(u'\u00a0', ' ').replace('*', '').replace('\n', '').replace('“', '').replace('”', '').replace('] ', '').replace('[', '').replace('Dipnot', '').replace(' 2698 ', '').replace('118123 ', '')
+    text = text.replace(u'\u00a0', ' ').replace('*', '').replace('\n', ' ').replace('\"', '').replace('“', '').replace('”', '').replace(']', ' ').replace('[', ' ').replace(' 2698 ', '').replace('118123 ', '')
+
+    # Clean "Dipnot n" where n is a number and "Dipnot"
+    text = re.sub(r'Dipnot \d{1}', '', text)  # Cleans "Dipnot" followed by up to number 3
+    text = re.sub(r' Dipnot', '', text)  # Cleans standalone "Dipnot"
 
     # Define patterns for ayah numbers (with and without space after colon)
     ayah_number_patterns = [f"{surah_number}: {ayah_number}", f"{surah_number}:{ayah_number}"]
@@ -78,17 +82,6 @@ def fetch_surah_ayahs(surah_number, surah_info):
 
     return ayahs
 
-
-def reindex_ayah_numbers(verses):
-    global_index = 1
-    reindexed_verses = {}
-
-    for key in sorted(verses.keys(), key=lambda x: (int(x.split(':')[0]), int(x.split(':')[1]))):
-        reindexed_verses[str(global_index)] = verses[key]
-        global_index += 1
-
-    return reindexed_verses
-
 def verify_ayahs_fetched(surah_number, fetched_ayahs, surah_info):
     expected_count = surah_info[str(surah_number)]["nAyah"]
 
@@ -116,9 +109,6 @@ for surah_number in range(1, 115):
     verify_ayahs_fetched(surah_number, surah_ayahs, surah_info)
     all_ayahs.update(surah_ayahs)
 
-# Re-indexing Ayahs
-reindexed_ayahs = reindex_ayah_numbers(all_ayahs)
-#reindexed_ayahs = all_ayahs
 # Writing to a JSON file
-with open('quran_tr.json', 'w', encoding='utf-8') as file:
-    json.dump(reindexed_ayahs, file, ensure_ascii=False, indent=2)
+with open('quran_scrapped_data.json', 'w', encoding='utf-8') as file:
+    json.dump(all_ayahs, file, ensure_ascii=False, indent=2)
