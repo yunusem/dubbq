@@ -17,6 +17,7 @@ const Arama = ({ hitCount, searchTerm, setSearchTerm, setOnlyWord, onlyWord }) =
 
   return (
     <div className="search-area flex flex-col h-screen w-96 space-y-2">
+     <div className="text-[#ffd700] ml-2">Uygulama geliştirme aşamasındadır</div>
       <div className="w-full bg-neutral-900 rounded shadow p-2.5 m-0.5">
         <input
           type="text"
