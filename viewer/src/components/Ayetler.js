@@ -9,6 +9,12 @@ const Ayetler = ({ selectedSurah, searchTerm, ayahs }) => {
     const observer = useRef();
     const lastAyahElementRef = useRef();
     const batchSize = 19;
+    const [showOriginal, setShowOriginal] = useState({});
+    const besmele = quranText["1"];
+    const namesOfGod = "الله|لله|والله|بالله|لله|ولله|تالله|فالله|فلله|ءالله|ابالله|وتالله";
+    const namesOfGod_tr = "TANRI"
+
+    let besmeleCounter = 0;
 
     useEffect(() => {
         setLoadedAyahs(ayahs.slice(0, batchSize));
@@ -38,18 +44,8 @@ const Ayetler = ({ selectedSurah, searchTerm, ayahs }) => {
         }
     }, [loadedAyahs, ayahs]);
 
-
-    const besmele = quranText["1"];
-    const namesOfGod = "الله|لله|والله|بالله|لله|ولله|تالله|فالله|فلله|ءالله|ابالله|وتالله";
-
-
-    const namesOfGod_tr = "TANRI"
-    const [selectedTranslations, setSelectedTranslations] = useState({});
-
-    let besmeleCounter = 0;
-
-    const toggleTranslation = (ayahNumber) => {
-        setSelectedTranslations((prevState) => ({
+    const toggleOriginalText = (ayahNumber) => {
+        setShowOriginal((prevState) => ({
             ...prevState,
             [ayahNumber]: !prevState[ayahNumber],
         }));
@@ -60,12 +56,12 @@ const Ayetler = ({ selectedSurah, searchTerm, ayahs }) => {
         if (rtleft) {
             parts = text.split(new RegExp(`(${namesOfGod})`, 'g')).reverse();
             return parts.map((part, index) =>
-                part.match(new RegExp(namesOfGod)) ? <span key={index} className="text-white mx-1" dir="rtl">{part}</span> : <span key={index} dir="rtl">{part}</span>
+                part.match(new RegExp(namesOfGod)) ? <span key={index} className="text-neutral-300 mx-1" dir="rtl">{part}</span> : <span key={index} dir="rtl">{part}</span>
             )
         } else {
             parts = text.split(new RegExp(`(${namesOfGod_tr})`, 'g'));
             return parts.map((part, index) =>
-                part.match(new RegExp(namesOfGod_tr)) ? <span key={index} className="text-white" >{part}</span> : <span key={index}>{" " + part}</span>
+                part.match(new RegExp(namesOfGod_tr)) ? <span key={index} className="text-neutral-300" >{part}</span> : <span key={index}>{" " + part}</span>
             )
         }
     };
@@ -85,7 +81,6 @@ const Ayetler = ({ selectedSurah, searchTerm, ayahs }) => {
         }
     };
 
-    // Function to get surah-specific ayah number
     const getSurahSpecificAyahNumber = (globalAyahNumber) => {
         const surahNumber = Object.keys(surahData).find(surah => {
             const { start, end } = surahData[surah];
@@ -95,19 +90,20 @@ const Ayetler = ({ selectedSurah, searchTerm, ayahs }) => {
     };
 
     const renderAyah = (globalAyahNumber, ayahText) => {
-        const showTranslation = selectedTranslations[globalAyahNumber];
-        const text = showTranslation ? quranText_tr[globalAyahNumber] : ayahText;
+        // Determine whether to show the original text or translation
+        const showOriginalText = showOriginal[globalAyahNumber];
+        const text = showOriginalText ? ayahText : quranText_tr[globalAyahNumber];
+
         return (
-            <div className={`w-full flex p-4 ${showTranslation ? (ayahText.includes(besmele) ? "justify-between" : "justify-start") : "justify-end"}`}>
-
+            <div className={`w-full flex p-4 ${showOriginalText ? "justify-end" : "justify-start"}`}>
                 {searchTerm ?
-                    (<p className={`w-full ${showTranslation ? "text-left" : "text-right"}`}>
-                        {highlightsearch(text, !showTranslation)}
+                    (<p className={`w-full ${showOriginalText ? "text-right" : "text-left"}`}>
+                        {highlightsearch(text, !showOriginalText)}
                     </p>) :
-                    (<p className={`w-full ${showTranslation ? "text-left" : "text-right"}`}>
-                        {highlight(text, !showTranslation)}
-                    </p>)}
-
+                    (<p className={`w-full ${showOriginalText ? "text-right" : "text-left"}`}>
+                        {highlight(text, showOriginalText)}
+                    </p>)
+                }
                 {ayahText.includes(besmele) && (<div className="flex ml-2 text-blue-200"> {`${++besmeleCounter}`} </div>)}
             </div>
         );
@@ -167,24 +163,26 @@ const Ayetler = ({ selectedSurah, searchTerm, ayahs }) => {
                     <li key={selectedSurah + ":0"} className="text-neutral-700 text-lg m-0.5 w-full">
                         {(selectedSurah && (Number(selectedSurah) !== 1 && Number(selectedSurah) !== 9) && !searchTerm) && (
                             <div className="flex w-full bg-blue-400 rounded shadow-black justify-end mb-2 ">
-                                <div className="w-full flex justify-end p-4">{highlight(besmele, true)}</div>
+                                <div className="w-full flex justify-end p-4">
+                                    {highlight(besmele, true)}
+                                </div>
                                 <div className="flex p-4 items-center text-blue-200">
                                     {`${++besmeleCounter}`}
                                 </div>
                             </div>
                         )}
-
                         {loadedAyahGroups.map((group, groupIndex) => (
-                            <div key={groupIndex} className="group-container px-1 mb-1 border-2 border-neutral-300/25 rounded-lg">
-                                {group.title && <div className="title-container text-neutral-300 p-1.5">{group.title}</div>}
+                            <div key={groupIndex} className="relative group-container px-1 mb-6 border-2 border-neutral-300/25 rounded-lg">
+                                {group.title && <div className="title-container text-neutral-300 p-1.5 h-4"></div>}
+                                {group.title && <div className="absolute bg-neutral-700 text-neutral-300 p-1.5 -top-5 left-2">{group.title}</div>}
                                 {group.ayahs.map(([ayahNumber, ayahText], index) => (
                                     <div
                                         key={ayahNumber}
                                         ref={index === group.ayahs.length - 1 && groupIndex === loadedAyahGroups.length - 1 ? lastAyahElementRef : null}
-                                        onClick={() => toggleTranslation(ayahNumber)}
-                                        className={`ayah-container rounded shadow-black justify-between mt-1 mb-1 cursor-pointer ${(ayahText.includes(besmele)) ? "bg-blue-400" : "bg-emerald-400"} `}
+                                        onClick={() => toggleOriginalText(ayahNumber)}
+                                        className={`ayah-container rounded shadow-black justify-between mt-1 mb-1 cursor-pointer ${(ayahText.includes(besmele)) ? "bg-blue-400" : "bg-emerald-500"} `}
                                     >
-                                        <div className="w-full flex">
+                                        <div className="w-full flex text-neutral-700">
                                             {renderAyahNumbers(ayahNumber)}
                                             {renderAyah(ayahNumber, ayahText)}
                                         </div>

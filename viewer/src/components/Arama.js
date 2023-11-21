@@ -51,7 +51,7 @@ const Arama = ({ hitCount, searchTerm, setSearchTerm, setOnlyWord, onlyWord }) =
           <div className="relative group w-full cursor-pointer">
             <div className="absolute w-48 -inset-1 translate-x-1 bg-gradient-to-r from-emerald-600 to-blue-600 rounded-full blur opacity-25 group-hover:opacity-100 transition duration-500 group-hover:duration-200"></div>
             <div className="relative h-48 w-48 p-4 bg-neutral-700 ring-1 ring-neutral-900/5 rounded-full leading-none flex items-top justify-start space-x-6">
-              <div className="w-full h-full flex p-4 justify-center text-neutral-700/80 group-hover:text-neutral-800/20 subpixel-antialiased items-center text-9xl font-semibold transition duration-500 group-hover:duration-500">
+              <div className="w-full h-full flex p-4 justify-center text-neutral-800/20 group-hover:text-neutral-800/80 subpixel-antialiased items-center text-9xl font-semibold transition duration-1000 group-hover:duration-100">
               19
               </div>
             </div>
