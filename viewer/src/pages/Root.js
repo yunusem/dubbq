@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Sureler from '../components/Sureler';
 import Arama from '../components/Arama';
 import Ayetler from '../components/Ayetler';
@@ -20,15 +20,33 @@ function Root() {
         setHitCount(0);
     };
 
-    const gatherAyahs = async (term, matchWholeWord = true) => {
+    const escapeRegExp = useCallback((string) => {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }, []);
+
+    const isWholeWordMatch = useCallback((text, matchIndex, termLength) => {
+        const charBefore = matchIndex > 0 ? text[matchIndex - 1] : ' ';
+        const charAfter = matchIndex + termLength < text.length ? text[matchIndex + termLength] : ' ';
+
+        return !charBefore.match(/\w/) && !charAfter.match(/\w/);
+    }, []);
+
+    const gatherAyahs = useCallback(async (term, matchWholeWord = true) => {
         return new Promise(resolve => {
             let hitScore = 0;
-            const regexPattern = matchWholeWord ? `\\b${term}\\b` : term;
-            const regex = new RegExp(regexPattern, 'g');
+            const escapedTerm = escapeRegExp(term);
+            const regex = new RegExp(escapedTerm, 'g');
 
             const matchedAyahs = Object.entries(quranText).filter(([ayahNumber, ayahText]) => {
-                const countInAyahText = (ayahText.match(regex) || []).length;
-                const countInTranslatedText = quranText_tr[ayahNumber] ? (quranText_tr[ayahNumber].match(regex) || []).length : 0;
+                const matchesInAyahText = [...ayahText.matchAll(regex)];
+                const matchesInTranslatedText = quranText_tr[ayahNumber] ? [...quranText_tr[ayahNumber].matchAll(regex)] : [];
+
+                const countInAyahText = matchWholeWord ?
+                    matchesInAyahText.filter(match => isWholeWordMatch(ayahText, match.index, escapedTerm.length)).length :
+                    matchesInAyahText.length;
+                const countInTranslatedText = matchWholeWord ?
+                    matchesInTranslatedText.filter(match => isWholeWordMatch(quranText_tr[ayahNumber], match.index, escapedTerm.length)).length :
+                    matchesInTranslatedText.length;
 
                 hitScore += countInAyahText + countInTranslatedText;
                 return countInAyahText > 0 || countInTranslatedText > 0;
@@ -36,7 +54,7 @@ function Root() {
 
             resolve({ matchedAyahs, hitScore });
         });
-    };
+    }, [escapeRegExp, isWholeWordMatch]);
 
     useEffect(() => {
         if (searchTerm) {
@@ -49,7 +67,7 @@ function Root() {
             setAyahs([]);
             setHitCount(0);
         }
-    }, [searchTerm, onlyWord]);
+    }, [searchTerm, onlyWord, gatherAyahs]);
 
     useEffect(() => {
         setAyahs(selectedSurah ?
@@ -63,7 +81,7 @@ function Root() {
     return (
         <div className="Root select-none bg-neutral-700 flex space-x-1">
             <Sureler onSelectSurah={handleSelectSurah} selectedSurah={selectedSurah} />
-            <Arama hitCount={hitCount} searchTerm={searchTerm} setSearchTerm={setSearchTerm} setOnlyWord={setOnlyWord} onlyWord={onlyWord}/>
+            <Arama hitCount={hitCount} searchTerm={searchTerm} setSearchTerm={setSearchTerm} setOnlyWord={setOnlyWord} onlyWord={onlyWord} />
             <Ayetler selectedSurah={selectedSurah} searchTerm={searchTerm} ayahs={ayahs} />
         </div>
     );

@@ -98,7 +98,7 @@ const Ayetler = ({ selectedSurah, searchTerm, ayahs }) => {
             <div className={`w-full flex p-4 ${showOriginalText ? "justify-end" : "justify-start"}`}>
                 {searchTerm ?
                     (<p className={`w-full ${showOriginalText ? "text-right" : "text-left"}`}>
-                        {highlightsearch(text, !showOriginalText)}
+                        {highlightsearch(text, showOriginalText)}
                     </p>) :
                     (<p className={`w-full ${showOriginalText ? "text-right" : "text-left"}`}>
                         {highlight(text, showOriginalText)}
