@@ -4,8 +4,9 @@ import Root from './pages/Root';
 function App() {
   return (
     // <NotificationsProvider>
-      <Router>
+      <Router basename={process.env.PUBLIC_URL}>
         <Routes>
+          <Route path="/dubbq" element={<Root />} />
           <Route path="/" element={<Root />} />
         </Routes>
         {/* <NotificationsContainer /> */}
