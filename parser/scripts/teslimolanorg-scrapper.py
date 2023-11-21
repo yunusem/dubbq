@@ -96,7 +96,7 @@ def verify_ayahs_fetched(surah_number, fetched_ayahs, surah_info):
         print(f"Warning: Missing Ayahs in Surah {surah_number}:{sorted(missing_ayahs)}")
 
 def read_surah_info():
-    with open('reindexed-surah.json', 'r', encoding='utf-8') as file:
+    with open('files/processed/reindexed-surah.json', 'r', encoding='utf-8') as file:
         return json.load(file)
 
 # Read Surah Information
@@ -110,5 +110,5 @@ for surah_number in range(1, 115):
     all_ayahs.update(surah_ayahs)
 
 # Writing to a JSON file
-with open('quran_scrapped_data.json', 'w', encoding='utf-8') as file:
+with open('files/original/quran_scrapped_data.json', 'w', encoding='utf-8') as file:
     json.dump(all_ayahs, file, ensure_ascii=False, indent=2)

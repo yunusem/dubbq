@@ -31,7 +31,7 @@ def process_quran(surah_data, quran_data):
     return surah_data
 
 # Load the JSON data
-with open('reindexed-surah.json', 'r', encoding='utf-8') as file:
+with open('files/processed/reindexed-surah.json', 'r', encoding='utf-8') as file:
     surah_data = json.load(file)
 with open('quran.json', 'r', encoding='utf-8') as file:
     quran_data = json.load(file)

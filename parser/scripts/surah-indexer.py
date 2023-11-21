@@ -15,14 +15,14 @@ def adjust_indexes(data):
 
 
 # Load the JSON data
-with open('surah.json', 'r', encoding='utf-8') as file:
+with open('files/original/surah.json', 'r', encoding='utf-8') as file:
     surah_data = json.load(file)
 
 # Adjust the indexes starting from the 9th element
 corrected_surah_data = adjust_indexes(surah_data)
 
 # Save the adjusted data
-with open('reindexed-surah.json', 'w', encoding='utf-8') as file:
+with open('files/processed/reindexed-surah.json', 'w', encoding='utf-8') as file:
     json.dump(corrected_surah_data, file, ensure_ascii=False, indent=4)
 
 print("Indexes adjusted and saved in 'reindexed-surah.json'.")

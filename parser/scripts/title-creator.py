@@ -39,17 +39,17 @@ def reindex_ayah_numbers(verses):
     return reindexed_verses
 
 # Read scrapped Quran data
-with open('quran_scrapped_data.json', 'r', encoding='utf-8') as file:
+with open('files/original/quran_scrapped_data.json', 'r', encoding='utf-8') as file:
     all_ayahs = json.load(file)
 
 # Extract titles and clean Ayahs
 titles, cleaned_ayahs = extract_titles_and_clean_ayahs(all_ayahs)
 
 # Save titles to a file
-with open('titles.json', 'w', encoding='utf-8') as file:
+with open('files/processed/titles.json', 'w', encoding='utf-8') as file:
     json.dump(titles, file, ensure_ascii=False, indent=2)
 
 # Re-index cleaned Ayahs and save to quran_tr.json
 reindexed_cleaned_ayahs = reindex_ayah_numbers(cleaned_ayahs)
-with open('quran_tr.json', 'w', encoding='utf-8') as file:
+with open('files/processed/quran_tr.json', 'w', encoding='utf-8') as file:
     json.dump(reindexed_cleaned_ayahs, file, ensure_ascii=False, indent=2)

@@ -21,7 +21,7 @@ def calculate_grand_total(letter_counts):
     return sum(letter_counts.values())
 
 # Process and print counts for the reindexed file
-with open('reindexed_imlaei-qurancom.json', 'r', encoding='utf-8') as file:
+with open('files/original/reindexed_imlaei-qurancom.json', 'r', encoding='utf-8') as file:
     words = json.load(file)
 letter_counts = count_arabic_letters(words)
 print("\nReindexed file letter counts:")

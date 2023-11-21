@@ -17,10 +17,10 @@ def parse_md_to_json(md_filename):
     return verses
 
 # Parse the markdown file
-verses = parse_md_to_json('imlaei-simple-qurancom.md')
+verses = parse_md_to_json('files/original/imlaei-simple-qurancom.md')
 
 # Write to a JSON file
-with open('imlaei-qurancom.json', 'w', encoding='utf-8') as file:
+with open('files/processed/imlaei-qurancom.json', 'w', encoding='utf-8') as file:
     json.dump(verses, file, ensure_ascii=False, indent=4)
 
 print("JSON file created successfully.")
