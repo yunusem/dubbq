@@ -21,10 +21,10 @@ const Sureler = ({ onSelectSurah, selectedSurah }) => {
     }, [sortByRevelation]);
 
     return (
-        <div className="navigation h-screen overflow-auto w-64 ">
-            <div className="px-2 py-4">
+        <div className="navigation overflow-auto w-full mr-2 h-32 mb-1">
+            <div className=" py-2 mr-4">
                 <label className="flex items-center relative cursor-pointer select-none w-full justify-between">
-                    <span className="text-lg font-bold text-neutral-300 ">Vahiy sırası</span>
+                    <span className="text-lg font-bold text-neutral-300 px-2">Vahiy sırası</span>
                     <input
                         type="checkbox"
                         checked={sortByRevelation}
@@ -35,17 +35,17 @@ const Sureler = ({ onSelectSurah, selectedSurah }) => {
                 </label>
             </div>
 
-            <ul className="surah-list flex-col mr-3">
+            <ul className="surah-list grid grid-cols-3 gap-1 mr-1">
                 {sortedSurahs.map(([surahNumber, surahInfo]) => {
                     return (
                         <li key={surahNumber} className="text-neutral-700 text-lg m-0.5 w-full">
                             <button
                                 type="button"
-                                className="flex w-full  justify-between cursor-pointer bg-neutral-900 active:bg-neutral-700 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150"
+                                className="flex w-full justify-between cursor-pointer bg-neutral-900 active:bg-neutral-700 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150"
                                 onClick={() => handleClick(surahNumber)}
                             >
-                                <div className="flex w-16 justify-end items-center px-4 py-1">{surahNumber}</div>
-                                <div className={`w-full flex justify-end px-4 py-1 ${Number(surahNumber) === Number(selectedSurah) ? 'text-[#ffd700]' : 'text-neutral-300'}`}>
+                                <div className="flex w-12 justify-end items-center px-2 py-1">{surahNumber}</div>
+                                <div className={`w-full flex justify-end px-2 py-1 ${Number(surahNumber) === Number(selectedSurah) ? 'text-[#ffd700]' : 'text-neutral-300'}`}>
                                     {surahInfo.name}
                                 </div>
                             </button>

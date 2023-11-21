@@ -157,9 +157,9 @@ const Ayetler = ({ selectedSurah, searchTerm, ayahs }) => {
     const loadedAyahGroups = groupLoadedAyahs();
 
     return (
-        <div className="matching-ayah-list flex flex-col w-full h-screen p-1 overflow-auto">
+        <div className="matching-ayah-list flex flex-col w-full p-1 overflow-auto h-96">
             <div className="w-full">
-                <ul className="quran-text-list flex-col space-y-2 mr-3">
+                <ul className="quran-text-list flex-col space-y-2 mr-1">
                     <li key={selectedSurah + ":0"} className="text-neutral-700 text-lg m-0.5 w-full">
                         {(selectedSurah && (Number(selectedSurah) !== 1 && Number(selectedSurah) !== 9) && !searchTerm) && (
                             <div className="flex w-full bg-blue-400 rounded shadow-black justify-end mb-2 ">
@@ -172,9 +172,9 @@ const Ayetler = ({ selectedSurah, searchTerm, ayahs }) => {
                             </div>
                         )}
                         {loadedAyahGroups.map((group, groupIndex) => (
-                            <div key={groupIndex} className="relative group-container px-1 mb-6 border-2 border-neutral-300/25 rounded-lg">
+                            <div key={groupIndex} className="relative group-container px-1 mb-12 border-2 border-neutral-300/25 rounded-lg">
                                 {group.title && <div className="title-container text-neutral-300 p-1.5 h-4"></div>}
-                                {group.title && <div className="absolute bg-neutral-700 text-neutral-300 p-1.5 -top-5 left-2">{group.title}</div>}
+                                {group.title && <div className="absolute bg-neutral-700 text-neutral-300 -top-10 left-2">{group.title}</div>}
                                 {group.ayahs.map(([ayahNumber, ayahText], index) => (
                                     <div
                                         key={ayahNumber}

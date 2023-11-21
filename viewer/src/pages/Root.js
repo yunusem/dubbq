@@ -79,9 +79,9 @@ function Root() {
     }, [selectedSurah]);
 
     return (
-        <div className="Root select-none bg-neutral-700 flex space-x-1">
-            <Sureler onSelectSurah={handleSelectSurah} selectedSurah={selectedSurah} />
+        <div className="Root select-none bg-neutral-700 flex-col h-screen">
             <Arama hitCount={hitCount} searchTerm={searchTerm} setSearchTerm={setSearchTerm} setOnlyWord={setOnlyWord} onlyWord={onlyWord} />
+            <Sureler onSelectSurah={handleSelectSurah} selectedSurah={selectedSurah} />
             <Ayetler selectedSurah={selectedSurah} searchTerm={searchTerm} ayahs={ayahs} />
         </div>
     );
