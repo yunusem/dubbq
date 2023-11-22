@@ -1,8 +1,13 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import surahData from '../assets/surah.json';
 
 const Sureler = ({ onSelectSurah, selectedSurah }) => {
     const [sortByRevelation, setSortByRevelation] = useState(false);
+    const [isNavOpen, setIsNavOpen] = useState(false);
+
+    useEffect(() => {
+        setIsNavOpen(false);
+    }, [selectedSurah]);
 
     const handleClick = (no) => {
         if (Number(selectedSurah) === Number(no)) {
@@ -21,27 +26,40 @@ const Sureler = ({ onSelectSurah, selectedSurah }) => {
     }, [sortByRevelation]);
 
     return (
-        <div className="navigation overflow-auto w-full mr-2 h-32 mb-1">
-            <div className=" py-2 mr-4">
-                <label className="flex items-center relative cursor-pointer select-none w-full justify-between">
-                    <span className="text-lg font-bold text-neutral-300 px-2">Vahiy sırası</span>
-                    <input
-                        type="checkbox"
-                        checked={sortByRevelation}
-                        onChange={() => setSortByRevelation(!sortByRevelation)}
-                        className={`appearance-none transition-colors cursor-pointer w-14 h-7 rounded-full ${sortByRevelation ? "bg-[#ffd700]" : " bg-neutral-500"}`}
-                    />
-                    <span className={`w-8 h-8 ${sortByRevelation ? ' -right-1' : 'right-7'} absolute rounded-full transform transition-transform bg-neutral-800`} />
-                </label>
+        <div className="w-full">
+            <div className="flex items-center justify-between bg-neutral-800 m-1 rounded">
+                <button
+                    onClick={() => setIsNavOpen(!isNavOpen)}
+                    className="text-[#ffd700] p-4 rounded hover:bg-neutral-800 w-full text-3xl"
+                >
+                    {selectedSurah ? sortedSurahs[Number(selectedSurah) - 1][1].name : "Sureler"}
+
+
+                    {/* If you're using an icon (ensure you have the icon set up correctly) */}
+                    <i className="fas fa-bars"></i>
+                </button>
             </div>
 
-            <ul className="surah-list grid grid-cols-3 gap-1 mr-1">
-                {sortedSurahs.map(([surahNumber, surahInfo]) => {
-                    return (
-                        <li key={surahNumber} className="text-neutral-700 text-lg m-0.5 w-full">
+            <div className={`${isNavOpen ? "md:block  h-96 md:h-fit overflow-auto md:overscroll-none" : "hidden"} `}>
+                <div className="relative py-2 px-4 bg-neutral-800 rounded m-1">
+                    <label className=" flex items-center justify-between">
+                        <span className="text-lg font-bold text-neutral-300">Vahiy sırası</span>
+                        <input
+                            type="checkbox"
+                            checked={sortByRevelation}
+                            onChange={() => setSortByRevelation(!sortByRevelation)}
+                            className={`appearance-none  transition-colors cursor-pointer w-14 h-7 rounded-full ${sortByRevelation ? "bg-[#ffd700]" : " bg-neutral-500"}`}
+                        />
+                        <span className={`w-8 h-8 ${sortByRevelation ? ' right-3.5' : 'right-10'} absolute rounded-full transform transition-transform bg-neutral-900`} />
+                    </label>
+                </div>
+
+                <ul className={`${sortByRevelation ? "flex flex-col space-y-0.5" : "grid grid-cols-3 md:grid-cols-6 gap-0.5"}  px-1 md:bg-neutral-700 `}>
+                    {sortedSurahs.map(([surahNumber, surahInfo]) => (
+                        <li key={surahNumber} className="text-neutral-700 bg-neutral-900 rounded text-lg m-0.5">
                             <button
                                 type="button"
-                                className="flex w-full justify-between cursor-pointer bg-neutral-900 active:bg-neutral-700 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150"
+                                className="flex w-full justify-between cursor-pointer active:bg-neutral-700 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150"
                                 onClick={() => handleClick(surahNumber)}
                             >
                                 <div className="flex w-12 justify-end items-center px-2 py-1">{surahNumber}</div>
@@ -50,9 +68,9 @@ const Sureler = ({ onSelectSurah, selectedSurah }) => {
                                 </div>
                             </button>
                         </li>
-                    );
-                })}
-            </ul>
+                    ))}
+                </ul>
+            </div>
         </div>
     );
 };

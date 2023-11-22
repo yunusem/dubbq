@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Arama = ({ hitCount, searchTerm, setSearchTerm, setOnlyWord, onlyWord }) => {
+const Arama = ({ hitCount, searchTerm, setSearchTerm, setOnlyWord, onlyWord}) => {
 
   const handleCheckboxChange = (e) => {
     setOnlyWord(e.target.checked);
@@ -16,7 +16,7 @@ const Arama = ({ hitCount, searchTerm, setSearchTerm, setOnlyWord, onlyWord }) =
   };
 
   return (
-    <div className="search-area flex flex-col w-full p-0.5">
+    <div className="search-area flex flex-col w-full p-1">
      <div className="text-[#ffd700] m-1">Uygulama geliştirme aşamasındadır</div>
       <div className="w-full bg-neutral-900 rounded shadow p-2.5">
         <input
@@ -42,7 +42,7 @@ const Arama = ({ hitCount, searchTerm, setSearchTerm, setOnlyWord, onlyWord }) =
       </div>
 
       {hitCount !== 0 && (
-        <div className="w-full flex justify-between rounded p-4 m-0.5 space-x-2 bg-neutral-800 text-[#ffd700]">
+        <div className="w-full flex justify-between rounded p-4 mt-1 space-x-2 bg-neutral-800 text-[#ffd700]">
           <div>{searchTerm}</div>
           <div>{formatHitCount(hitCount)}</div>
         </div>)}
