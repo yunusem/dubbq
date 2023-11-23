@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/dubbq/static/css/main.37a9f777.css",
-    "main.js": "/dubbq/static/js/main.14a780cc.js",
+    "main.css": "/dubbq/static/css/main.a1baf86a.css",
+    "main.js": "/dubbq/static/js/main.e29c75c7.js",
     "static/js/787.3f3a8d0a.chunk.js": "/dubbq/static/js/787.3f3a8d0a.chunk.js",
     "static/media/Tevbe-3.wav": "/dubbq/static/media/Tevbe-3.d0ec6a5edf74bc499012.wav",
     "static/media/Tevbe-2.wav": "/dubbq/static/media/Tevbe-2.e49de7c7617d4b7c36f5.wav",
     "static/media/Tevbe-1.wav": "/dubbq/static/media/Tevbe-1.3996bcf8dd075bef574d.wav",
     "index.html": "/dubbq/index.html",
-    "main.37a9f777.css.map": "/dubbq/static/css/main.37a9f777.css.map",
-    "main.14a780cc.js.map": "/dubbq/static/js/main.14a780cc.js.map",
+    "main.a1baf86a.css.map": "/dubbq/static/css/main.a1baf86a.css.map",
+    "main.e29c75c7.js.map": "/dubbq/static/js/main.e29c75c7.js.map",
     "787.3f3a8d0a.chunk.js.map": "/dubbq/static/js/787.3f3a8d0a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.37a9f777.css",
-    "static/js/main.14a780cc.js"
+    "static/css/main.a1baf86a.css",
+    "static/js/main.e29c75c7.js"
   ]
 }
