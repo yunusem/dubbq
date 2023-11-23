@@ -71,12 +71,12 @@ const Ayetler = ({ selectedSurah, searchTerm, ayahs }) => {
         if (rtleft) {
             parts = text.split(new RegExp(`(${searchTerm})`, 'g')).reverse();
             return parts.map((part, index) =>
-                part.match(new RegExp(searchTerm)) ? <span key={index} className="text-red-500 font-bold mx-1" dir="rtl">{part}</span> : <span key={index} dir="rtl">{part}</span>
+                part.match(new RegExp(searchTerm)) ? <span key={index} className="text-rose-700 font-bold mx-1" dir="rtl">{part}</span> : <span key={index} dir="rtl">{part}</span>
             )
         } else {
             parts = text.split(new RegExp(`(${searchTerm})`, 'g'));
             return parts.map((part, index) =>
-                part.match(new RegExp(searchTerm)) ? <span key={index} className="text-red-500 font-bold " >{part}</span> : <span key={index}>{" " + part}</span>
+                part.match(new RegExp(searchTerm)) ? <span key={index} className="text-rose-700 font-bold " >{part}</span> : <span key={index}>{" " + part}</span>
             )
         }
     };
@@ -97,32 +97,96 @@ const Ayetler = ({ selectedSurah, searchTerm, ayahs }) => {
         return surahData[surahNumber]?.type === "wi";
     };
 
+    const separateInitials = (ayahNumber) => {
+        const isInitialAyah = isSurahWithInitials(ayahNumber) &&
+            getSurahSpecificAyahNumber(ayahNumber) === 1;
+
+        if (isInitialAyah) {
+            const ayahText = quranText[ayahNumber];
+            // Split the ayah text into individual letters
+            return ayahText.split('').filter(letter => letter.trim() !== '');
+        }
+        return null;
+    };
+
+
+    const countInitialsInSurah = (initials, surahNumber) => {
+        const counts = {};
+        initials.forEach(initial => {
+            counts[initial] = 0;
+        });
+
+        // Count occurrences of each initial in the surah
+        const { start, end } = surahData[surahNumber];
+        for (let ayahNumber = start; ayahNumber <= end; ayahNumber++) {
+            const ayahText = quranText[ayahNumber];
+            initials.forEach(initial => {
+                const count = (ayahText.match(new RegExp(initial, "g")) || []).length;
+                counts[initial] += count;
+            });
+        }
+        return counts;
+    };
+
+
     const renderAyah = (globalAyahNumber, ayahText) => {
         // Determine whether to show the original text or translation
         const showOriginalText = showOriginal[globalAyahNumber];
         const text = showOriginalText ? ayahText : quranText_tr[globalAyahNumber];
 
         const surahHasInitials = isSurahWithInitials(globalAyahNumber) && Number(getSurahSpecificAyahNumber(globalAyahNumber)) === 1;
+        const initials = separateInitials(globalAyahNumber);
+        let initialsCounts = {};
+
+        const surahNumber = Object.keys(surahData).find(surah => {
+            const { start, end } = surahData[surah];
+            return globalAyahNumber >= start && globalAyahNumber <= end;
+        });
+
+        if (surahHasInitials && initials) {
+            initialsCounts = countInitialsInSurah(initials, surahNumber);
+        }
+
+        // Extract the first word (assumed to be the initials)
+        const firstWord = ayahText.split(/\s+/)[0];
+        // The rest of the ayah text
+        const restOfAyah = ayahText.substring(firstWord.length);
 
         return (
             surahHasInitials ?
                 (
-                    <div className="w-full flex justify-between p-4 ">
-                        <div className={`w-full flex justify-start `}>
-                            <p className={`w-full text-left`}>
-                                {highlight(quranText_tr[globalAyahNumber], showOriginalText)}
+                    <div className="w-full flex justify-between py-2 mr-1 px-1 ">
+                        <div className={`flex w-full justify-start `}>
+                            <p className={`text-left`}>
+                                {quranText_tr[globalAyahNumber]}
                             </p>
 
                             {ayahText.includes(besmele) && (<div className="flex ml-2 text-sky-200"> {`${++besmeleCounter}`} </div>)}
                         </div>
-                        <div className={`w-full flex justify-end `}>
+                        <div className={`w-full`}>
+                            <p className={`text-right`}>
+                                <span dir="rtl">
 
-                            <p className={`w-full  text-right `}>
-                                {highlight(ayahText, true)}
+                                    {showOriginalText && firstWord.split('').map((letter, index) => (
+                                        letter.trim() !== '' && (
+                                            <span key={index} dir="rtl" className="initial-letter text-sky-400">
+                                                {letter} <span className="text-[11px] sm:text-sm">({initialsCounts[letter]})</span>
+                                            </span>
+                                        )
+
+                                    ))
+                                    }
+                                    {showOriginalText && (<span>{restOfAyah}</span>)}
+
+
+                                    {!showOriginalText && quranText[globalAyahNumber]}
+                                </span>
                             </p>
-
-                            {ayahText.includes(besmele) && (<div className="flex ml-2 text-sky-200"> {`${++besmeleCounter}`} </div>)}
+                            {ayahText.includes(besmele) && (
+                                <div className="flex ml-2 text-sky-200">{`${++besmeleCounter}`}</div>
+                            )}
                         </div>
+
                     </div>)
                 : (<div className={`w-full flex p-4 ${showOriginalText ? "justify-end" : "justify-start"}`}>
                     {searchTerm ?
@@ -152,8 +216,8 @@ const Ayetler = ({ selectedSurah, searchTerm, ayahs }) => {
         const ayahLabel = `${surahNumber}:${ayahNumberSurahSpecific}`;
 
         return (
-            <div className="flex flex-col justify-between items-end  p-1 ">
-                <div className="ayah-label text-sm font-bold mr-2 text-neutral-950">{ayahLabel}</div>
+            <div className="flex flex-col justify-between items-end  p-1 text-neutral-950">
+                <div className="ayah-label text-sm font-bold mr-2 ">{ayahLabel}</div>
                 <div className="global-ayah-number text-xs mr-2">{globalAyahNumber}</div>
             </div>
         );
@@ -187,17 +251,19 @@ const Ayetler = ({ selectedSurah, searchTerm, ayahs }) => {
     const loadedAyahGroups = groupLoadedAyahs();
 
     return (
-        <div className="matching-ayah-list  flex-col w-full p-1 overflow-auto bg-neutral-700">
+        <div className="matching-ayah-list flex-col w-full p-1 overflow-auto bg-neutral-700">
             <div className="w-full">
                 <ul className="quran-text-list flex-col space-y-2 mr-1">
                     <li key={selectedSurah + ":0"} className="text-neutral-700 text-lg m-0.5 w-full">
                         {(selectedSurah && (Number(selectedSurah) !== 1 && Number(selectedSurah) !== 9) && !searchTerm) && (
-                            <div className="flex w-full bg-sky-500 rounded shadow-lg justify-end mb-2 ">
-                                <div className="w-full flex justify-end p-4">
-                                    {highlight(besmele, true)}
-                                </div>
-                                <div className="flex p-4 items-center text-sky-200">
-                                    {`${++besmeleCounter}`}
+                            <div className="w-full p-0.5">
+                                <div className="flex w-full bg-sky-500 rounded shadow-lg justify-end  ">
+                                    <div className="w-full flex justify-end py-4">
+                                        {highlight(besmele, true)}
+                                    </div>
+                                    <div className="flex py-4 px-2 items-center text-sky-200">
+                                        {`${++besmeleCounter}`}
+                                    </div>
                                 </div>
                             </div>
                         )}
@@ -212,7 +278,7 @@ const Ayetler = ({ selectedSurah, searchTerm, ayahs }) => {
                                         onClick={() => toggleOriginalText(ayahNumber)}
                                         className={`ayah-container rounded shadow-lg justify-between mt-1 mb-1 cursor-pointer ${(ayahText.includes(besmele)) ? "bg-sky-500" : "bg-emerald-500"} `}
                                     >
-                                        <div className={`w-full flex text-neutral-700 ${isSurahWithInitials(ayahNumber) && Number(getSurahSpecificAyahNumber(ayahNumber)) === 1 ? "bg-purple-400 rounded":""}`}>
+                                        <div className={`w-full flex ${isSurahWithInitials(ayahNumber) && Number(getSurahSpecificAyahNumber(ayahNumber)) === 1 ? "bg-sky-700 rounded text-neutral-300" : "text-neutral-700"}`}>
                                             {renderAyahNumbers(ayahNumber)}
                                             {renderAyah(ayahNumber, ayahText)}
                                         </div>
