@@ -14,7 +14,35 @@ const Ayetler = ({ selectedSurah, searchTerm, ayahs }) => {
     const namesOfGod = "الله|لله|والله|بالله|لله|ولله|تالله|فالله|فلله|ءالله|ابالله|وتالله";
     const namesOfGod_tr = "TANRI"
 
-    let besmeleCounter = 0;
+    const [besmeleCounts, setBesmeleCounts] = useState({});
+
+    const calculateBesmeleCounts = () => {
+        const besmele = quranText["1"];
+        let counts = {};
+        let count = 0;
+
+        // Iterate through each ayah to update the count
+        Object.entries(quranText).forEach(([ayahNumber, ayahText]) => {
+            if (ayahText.includes(besmele)) {
+                counts[ayahNumber] = ++count;
+            }
+        });
+
+        // Start by accounting for surah beginnings (except Surahs 1 and 9)
+        Object.entries(surahData).forEach(([number]) => {
+            if (number !== "1" && number !== "9") {
+                count++;
+                counts[number] = count;
+            }
+        });
+
+        return counts;
+    };
+
+    useEffect(() => {
+        const counts = calculateBesmeleCounts();
+        setBesmeleCounts(counts);
+    }, []);
 
     useEffect(() => {
         setLoadedAyahs(ayahs.slice(0, batchSize));
@@ -136,6 +164,13 @@ const Ayetler = ({ selectedSurah, searchTerm, ayahs }) => {
 
         const surahHasInitials = isSurahWithInitials(globalAyahNumber) && Number(getSurahSpecificAyahNumber(globalAyahNumber)) === 1;
         const initials = separateInitials(globalAyahNumber);
+
+        let besmeleCount = 0;
+        if (ayahText.includes(besmele)) {
+            besmeleCount = besmeleCounts[globalAyahNumber];
+        }
+
+
         let initialsCounts = {};
 
         const surahNumber = Object.keys(surahData).find(surah => {
@@ -161,7 +196,7 @@ const Ayetler = ({ selectedSurah, searchTerm, ayahs }) => {
                                 {quranText_tr[globalAyahNumber]}
                             </p>
 
-                            {ayahText.includes(besmele) && (<div className="flex ml-2 text-sky-200"> {`${++besmeleCounter}`} </div>)}
+                            {ayahText.includes(besmele) && (<div className="flex ml-2 text-sky-200"> {besmeleCount} </div>)}
                         </div>
                         <div className={`w-full`}>
                             <p className={`text-right`}>
@@ -182,7 +217,7 @@ const Ayetler = ({ selectedSurah, searchTerm, ayahs }) => {
                                 </span>
                             </p>
                             {ayahText.includes(besmele) && (
-                                <div className="flex ml-2 text-sky-200">{`${++besmeleCounter}`}</div>
+                                <div className="flex ml-2 text-sky-200">{besmeleCount}</div>
                             )}
                         </div>
 
@@ -196,7 +231,7 @@ const Ayetler = ({ selectedSurah, searchTerm, ayahs }) => {
                             {highlight(text, showOriginalText)}
                         </p>)
                     }
-                    {ayahText.includes(besmele) && (<div className="flex ml-2 text-sky-200"> {`${++besmeleCounter}`} </div>)}
+                    {ayahText.includes(besmele) && (<div className=" absolute right-2 top-2 text-xs flex ml-2 text-sky-200"> {besmeleCount} </div>)}
                 </div>)
 
         );
@@ -255,13 +290,21 @@ const Ayetler = ({ selectedSurah, searchTerm, ayahs }) => {
                 <ul className="quran-text-list flex-col space-y-2 mr-1">
                     <li key={selectedSurah + ":0"} className="text-neutral-700 text-lg m-0.5 w-full">
                         {(selectedSurah && (Number(selectedSurah) !== 1 && Number(selectedSurah) !== 9) && !searchTerm) && (
-                            <div className="w-full p-0.5">
-                                <div className="flex w-full bg-sky-500 rounded shadow-lg justify-end  ">
-                                    <div className="w-full flex justify-end py-4">
-                                        {highlight(besmele, true)}
+                            <div className="w-full p-0.5 mb-2">
+                                <div className="relative flex w-full bg-sky-500 rounded shadow-lg justify-between ">
+                                    <div className="flex justify-start ml-2 py-2 text-sm">
+                                        <p className={` text-clip text-left`}>
+                                            {highlight(quranText_tr["1"], false)}
+                                        </p>
                                     </div>
-                                    <div className="flex py-4 px-2 items-center text-sky-200">
-                                        {`${++besmeleCounter}`}
+                                    <div className="w-full flex justify-end py-4 mt-2 mr-2">
+                                        <p className={`w-full text-right items-center`}>
+                                            {highlight(besmele, true)}
+                                        </p>
+                                    </div>
+                                    {/* Display the total count of Besmele occurrences for the last Ayah */}
+                                    <div className="absolute flex right-1 top-1 items-start text-xs text-sky-200">
+                                        {Object.keys(besmeleCounts).length > 0 ? besmeleCounts[Number(selectedSurah)] : 0}
                                     </div>
                                 </div>
                             </div>
