@@ -1,0 +1,344 @@
+{
+    "1": {
+        "name": "Fâtiha"
+    },
+    "2": {
+        "name": "Bakara"
+    },
+    "3": {
+        "name": "Âl-i İmrân"
+    },
+    "4": {
+        "name": "Nisâ"
+    },
+    "5": {
+        "name": "Mâide"
+    },
+    "6": {
+        "name": "En'âm"
+    },
+    "7": {
+        "name": "A'râf"
+    },
+    "8": {
+        "name": "Enfâl"
+    },
+    "9": {
+        "name": "Tevbe"
+    },
+    "10": {
+        "name": "Yûnus"
+    },
+    "11": {
+        "name": "Hûd"
+    },
+    "12": {
+        "name": "Yûsuf"
+    },
+    "13": {
+        "name": "Ra'd"
+    },
+    "14": {
+        "name": "İbrâhîm"
+    },
+    "15": {
+        "name": "Hicr"
+    },
+    "16": {
+        "name": "Nahl"
+    },
+    "17": {
+        "name": "İsrâ"
+    },
+    "18": {
+        "name": "Kehf"
+    },
+    "19": {
+        "name": "Meryem"
+    },
+    "20": {
+        "name": "Tâhâ"
+    },
+    "21": {
+        "name": "Enbiyâ"
+    },
+    "22": {
+        "name": "Hac"
+    },
+    "23": {
+        "name": "Mü'minûn"
+    },
+    "24": {
+        "name": "Nûr"
+    },
+    "25": {
+        "name": "Furkân"
+    },
+    "26": {
+        "name": "Şuarâ"
+    },
+    "27": {
+        "name": "Neml"
+    },
+    "28": {
+        "name": "Kasas"
+    },
+    "29": {
+        "name": "Ankebût"
+    },
+    "30": {
+        "name": "Rûm"
+    },
+    "31": {
+        "name": "Lokmân"
+    },
+    "32": {
+        "name": "Secde"
+    },
+    "33": {
+        "name": "Ahzâb"
+    },
+    "34": {
+        "name": "Sebe'"
+    },
+    "35": {
+        "name": "Fâtır"
+    },
+    "36": {
+        "name": "Yâsîn"
+    },
+    "37": {
+        "name": "Sâffât"
+    },
+    "38": {
+        "name": "Sâd"
+    },
+    "39": {
+        "name": "Zümer"
+    },
+    "40": {
+        "name": "Mü'min"
+    },
+    "41": {
+        "name": "Fussilet"
+    },
+    "42": {
+        "name": "Şûrâ"
+    },
+    "43": {
+        "name": "Zuhruf"
+    },
+    "44": {
+        "name": "Duhân"
+    },
+    "45": {
+        "name": "Câsiye"
+    },
+    "46": {
+        "name": "Ahkâf"
+    },
+    "47": {
+        "name": "Muhammed"
+    },
+    "48": {
+        "name": "Fetih"
+    },
+    "49": {
+        "name": "Hucurât"
+    },
+    "50": {
+        "name": "Kâf"
+    },
+    "51": {
+        "name": "Zâriyât"
+    },
+    "52": {
+        "name": "Tûr"
+    },
+    "53": {
+        "name": "Necm"
+    },
+    "54": {
+        "name": "Kamer"
+    },
+    "55": {
+        "name": "Rahmân"
+    },
+    "56": {
+        "name": "Vâkıa"
+    },
+    "57": {
+        "name": "Hadîd"
+    },
+    "58": {
+        "name": "Mücâdele"
+    },
+    "59": {
+        "name": "Haşr"
+    },
+    "60": {
+        "name": "Mümtehine"
+    },
+    "61": {
+        "name": "Saf"
+    },
+    "62": {
+        "name": "Cuma"
+    },
+    "63": {
+        "name": "Münâfikûn"
+    },
+    "64": {
+        "name": "Tegâbün"
+    },
+    "65": {
+        "name": "Talâk"
+    },
+    "66": {
+        "name": "Tahrîm"
+    },
+    "67": {
+        "name": "Mülk"
+    },
+    "68": {
+        "name": "Kalem"
+    },
+    "69": {
+        "name": "Hâkka"
+    },
+    "70": {
+        "name": "Meâric"
+    },
+    "71": {
+        "name": "Nûh"
+    },
+    "72": {
+        "name": "Cin"
+    },
+    "73": {
+        "name": "Müzzemmil"
+    },
+    "74": {
+        "name": "Müddessir"
+    },
+    "75": {
+        "name": "Kıyâmet"
+    },
+    "76": {
+        "name": "İnsân"
+    },
+    "77": {
+        "name": "Mürselât"
+    },
+    "78": {
+        "name": "Nebe"
+    },
+    "79": {
+        "name": "Naziât"
+    },
+    "80": {
+        "name": "Abese"
+    },
+    "81": {
+        "name": "Tekvîr"
+    },
+    "82": {
+        "name": "İnfitâr"
+    },
+    "83": {
+        "name": "Mutaffifîn"
+    },
+    "84": {
+        "name": "İnşikâk"
+    },
+    "85": {
+        "name": "Burûc"
+    },
+    "86": {
+        "name": "Târık"
+    },
+    "87": {
+        "name": "A'lâ"
+    },
+    "88": {
+        "name": "Gâşiye"
+    },
+    "89": {
+        "name": "Fecr"
+    },
+    "90": {
+        "name": "Beled"
+    },
+    "91": {
+        "name": "Şems"
+    },
+    "92": {
+        "name": "Leyl"
+    },
+    "93": {
+        "name": "Duhâ"
+    },
+    "94": {
+        "name": "İnşirâh"
+    },
+    "95": {
+        "name": "Tîn"
+    },
+    "96": {
+        "name": "Alak"
+    },
+    "97": {
+        "name": "Kadir"
+    },
+    "98": {
+        "name": "Beyyine"
+    },
+    "99": {
+        "name": "Zilzâl"
+    },
+    "100": {
+        "name": "Âdiyât"
+    },
+    "101": {
+        "name": "Kâria"
+    },
+    "102": {
+        "name": "Tekâsür"
+    },
+    "103": {
+        "name": "Asr"
+    },
+    "104": {
+        "name": "Hümeze"
+    },
+    "105": {
+        "name": "Fîl"
+    },
+    "106": {
+        "name": "Kureyş"
+    },
+    "107": {
+        "name": "Maûn"
+    },
+    "108": {
+        "name": "Kevser"
+    },
+    "109": {
+        "name": "Kâfirûn"
+    },
+    "110": {
+        "name": "Nasr"
+    },
+    "111": {
+        "name": "Tebbet"
+    },
+    "112": {
+        "name": "İhlâs"
+    },
+    "113": {
+        "name": "Felak"
+    },
+    "114": {
+        "name": "Nâs"
+    }
+}
