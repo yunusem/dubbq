@@ -39,9 +39,6 @@ const Sureler = ({ onSelectSurah, selectedSurah }) => {
                 >
                     {selectedSurah ? getTranslatedSurahName(Number(selectedSurah)) : "Sureler"}
 
-
-                    {/* If you're using an icon (ensure you have the icon set up correctly) */}
-                    <i className="fas fa-bars"></i>
                 </button>
             </div>
 
