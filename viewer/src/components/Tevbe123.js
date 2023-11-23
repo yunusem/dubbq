@@ -17,28 +17,33 @@ const Tevbe123 = () => {
     const audioCircleRef = useRef(null);
     const analyzerRef = useRef();
     const animationFrameId = useRef();
+    const [isPlaying, setIsPlaying] = useState(false);
 
     // Function to play audio files in sequence
     const playAudiosInSequence = async () => {
-        if (!audioContextRef.current) {
-            audioContextRef.current = new (window.AudioContext || window.webkitAudioContext)();
-            const analyzer = audioContextRef.current.createAnalyser();
-            analyzerRef.current = analyzer;
+        if (!isPlaying) {
+            setIsPlaying(true);
+            if (!audioContextRef.current) {
+                audioContextRef.current = new (window.AudioContext || window.webkitAudioContext)();
+                const analyzer = audioContextRef.current.createAnalyser();
+                analyzerRef.current = analyzer;
 
-            audioRefs.current.forEach(audio => {
-                const source = audioContextRef.current.createMediaElementSource(audio);
-                source.connect(analyzer);
-            });
-            analyzer.connect(audioContextRef.current.destination);
+                audioRefs.current.forEach(audio => {
+                    const source = audioContextRef.current.createMediaElementSource(audio);
+                    source.connect(analyzer);
+                });
+                analyzer.connect(audioContextRef.current.destination);
+            }
+
+            startVisualization();
+
+            for (const audio of audioRefs.current) {
+                await playAudio(audio);
+            }
+
+            stopVisualization();
+            setIsPlaying(false);
         }
-
-        startVisualization();
-
-        for (const audio of audioRefs.current) {
-            await playAudio(audio);
-        }
-
-        stopVisualization();
     };
 
     // Function to play an individual audio file
@@ -51,22 +56,22 @@ const Tevbe123 = () => {
 
     const startVisualization = () => {
         const dataArray = new Uint8Array(analyzerRef.current.frequencyBinCount);
-    
+
         const draw = () => {
             analyzerRef.current.getByteFrequencyData(dataArray);
             const average = dataArray.reduce((a, b) => a + b) / dataArray.length;
-    
+
             // Update circle style based on `average`
-            const glowIntensity = Math.min(20, average / 5); // Example calculation
+            const glowIntensity = Math.min(100, average / 5); // Example calculation
             if (audioCircleRef.current) {
                 audioCircleRef.current.style.boxShadow = `0 0 ${glowIntensity}px #ffd700`;
             }
-    
+
             animationFrameId.current = requestAnimationFrame(draw);
         };
         draw();
     };
-    
+
     const stopVisualization = () => {
         cancelAnimationFrame(animationFrameId.current);
     };
@@ -144,7 +149,8 @@ const Tevbe123 = () => {
                         <li key={index} className="text-neutral-700 text-lg m-0.5 w-full">
                             <div
                                 className="ayah-container w-full flex rounded shadow-lg justify-between mt-1 mb-1 cursor-pointer bg-violet-300"
-                                onClick={() => toggleOriginalText(ayahNumber)}>
+                                onClick={() => toggleOriginalText(ayahNumber)}
+                                style={{ cursor: isPlaying ? 'not-allowed' : 'pointer' }}>
                                 {renderAyahNumbers(ayahNumber)}
                                 {renderAyah(ayahNumber, quranText[ayahNumber])}
                             </div>
@@ -155,7 +161,7 @@ const Tevbe123 = () => {
             <div className="w-full flex flex-1  items-center justify-center mt-4">
                 <div
                     ref={audioCircleRef}
-                    className="h-24 w-24 rounded-full bg-black"
+                    className="h-24 w-24 rounded-full bg-neutral-950 shadow-lg"
                     onClick={playAudiosInSequence}>
                 </div>
             </div>
