@@ -3,7 +3,7 @@ import surahData from '../assets/surah.json';
 import surahData_tr from '../assets/surah_tr.json';
 
 const Sureler = ({ onSelectSurah, selectedSurah }) => {
-    const [sortByRevelation, setSortByRevelation] = useState(false);
+    const [sortByRevelation, setSortByRevelation] = useState(true);
     const [isNavOpen, setIsNavOpen] = useState(false);
 
     useEffect(() => {
@@ -35,7 +35,7 @@ const Sureler = ({ onSelectSurah, selectedSurah }) => {
             <div className="flex items-center justify-between bg-neutral-800 m-1 rounded">
                 <button
                     onClick={() => setIsNavOpen(!isNavOpen)}
-                    className="text-[#ffd700] p-1 md:p-4 rounded hover:bg-neutral-800 w-full md:text-3xl"
+                    className={` p-1 md:p-4 rounded hover:bg-neutral-800 w-full md:text-3xl ${isNavOpen ? "text-[#ffd700]" :"text-neutral-400" }`}
                 >
                     {selectedSurah ? getTranslatedSurahName(Number(selectedSurah)) : "Sureler"}
 
@@ -58,7 +58,7 @@ const Sureler = ({ onSelectSurah, selectedSurah }) => {
 
                 <ul className={`${sortByRevelation ? "flex flex-col space-y-0.5" : "grid grid-cols-3 md:grid-cols-6 gap-0.5"}  px-1 md:bg-neutral-700 `}>
                     {sortedSurahs.map(([surahNumber, surahInfo]) => (
-                        <li key={surahNumber} className={` rounded text-lg m-0.5 ${surahInfo.type === "wi" ? "bg-sky-700 text-neutral-800" : "bg-neutral-900 text-neutral-500"}`}>
+                        <li key={surahNumber} className={` rounded text-lg m-0.5 ${surahInfo.type === "wi" ? "bg-sky-700 text-neutral-800" :( Number(surahNumber) === 9 ? "bg-gradient-to-r from-emerald-600 to-sky-600 border-emerald-400 border-2" : "bg-neutral-900 text-neutral-500")}`}>
                             <button
                                 type="button"
                                 className="flex w-full justify-between cursor-pointer active:bg-neutral-700 rounded shadow hover:shadow-md outline-none focus:outline-none ease-linear transition-all duration-150"

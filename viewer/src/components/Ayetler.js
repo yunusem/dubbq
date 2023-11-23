@@ -166,11 +166,10 @@ const Ayetler = ({ selectedSurah, searchTerm, ayahs }) => {
                         <div className={`w-full`}>
                             <p className={`text-right`}>
                                 <span dir="rtl">
-
                                     {showOriginalText && firstWord.split('').map((letter, index) => (
                                         letter.trim() !== '' && (
                                             <span key={index} dir="rtl" className="initial-letter text-sky-400">
-                                                {letter} <span className="text-[11px] sm:text-sm">({initialsCounts[letter]})</span>
+                                                {letter} <span className="text-[11px] sm:text-sm ">({initialsCounts[letter]})</span>
                                             </span>
                                         )
 

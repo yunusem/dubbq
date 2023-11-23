@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Sureler from '../components/Sureler';
 import Arama from '../components/Arama';
 import Ayetler from '../components/Ayetler';
+import Tevbe123 from '../components/Tevbe123';
 
 import quranText from '../assets/quran.json';
 import quranText_tr from '../assets/quran_tr.json';
@@ -82,7 +83,8 @@ function Root() {
         <div className="Root select-none bg-neutral-700 flex flex-col h-screen">
             {!selectedSurah && <Arama hitCount={hitCount} searchTerm={searchTerm} setSearchTerm={setSearchTerm} setOnlyWord={setOnlyWord} onlyWord={onlyWord}/>}
             <Sureler onSelectSurah={handleSelectSurah} selectedSurah={selectedSurah} />
-            <Ayetler selectedSurah={selectedSurah} searchTerm={searchTerm} ayahs={ayahs} />
+            <Ayetler selectedSurah={selectedSurah} searchTerm={searchTerm} ayahs={ayahs}/>
+            {(!selectedSurah && !searchTerm) && <Tevbe123/>}
         </div>
     );
 }

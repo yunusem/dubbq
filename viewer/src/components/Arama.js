@@ -25,7 +25,7 @@ const Arama = ({ hitCount, searchTerm, setSearchTerm, setOnlyWord, onlyWord }) =
           placeholder="Ara ..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full p-2 rounded bg-neutral-700 focus:outline-none focus:ring focus:ring-[#ffd700] focus:text-neutral-300"
+          className="w-full p-2 rounded bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-[#ffd700] focus:text-neutral-300"
         />
         <div className="absolute top-2.5 right-2.5">
           <label className="flex items-center justify-center relative cursor-pointer select-none">
@@ -38,7 +38,7 @@ const Arama = ({ hitCount, searchTerm, setSearchTerm, setOnlyWord, onlyWord }) =
             <img
               src="match-whole-word.png"
               alt="W"
-              className={`absolute w-10 h-10 object-fill ${onlyWord ? "brightness-150" : "brightness-100 opacity-50"}`}
+              className={`absolute w-10 h-10 rounded object-fill ${onlyWord ? "brightness-150" : "brightness-100 opacity-50"}`}
             >
             </img>
           </label>
